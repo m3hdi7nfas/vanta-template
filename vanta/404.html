@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Page not found | VANTA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23080808'/><text x='16' y='22' font-size='18' text-anchor='middle' fill='%23c9a96e' font-family='serif'>V</text></svg>" />
+  <style>
+    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .not-found {
+      text-align: center; padding: var(--space-9) var(--space-5);
+      display: flex; flex-direction: column; align-items: center; gap: var(--space-5);
+      max-width: 480px;
+    }
+    .not-found-num {
+      font-family: var(--font-serif); font-size: 8rem; font-weight: 300;
+      line-height: 1; color: var(--c-graphite); letter-spacing: -0.04em;
+    }
+  </style>
+</head>
+<body>
+  <div class="not-found">
+    <div class="not-found-num">404</div>
+    <div class="divider divider--center"></div>
+    <h1 class="t-title">Page not found</h1>
+    <p class="t-body" style="text-align:center;">The page you're looking for doesn't exist or has been moved.</p>
+    <a href="index.html" class="btn btn--primary">Return Home</a>
+  </div>
+</body>
+</html>

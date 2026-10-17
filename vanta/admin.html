@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>VANTA — Management Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/sections.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23080808'/><text x='16' y='22' font-size='18' text-anchor='middle' fill='%23c9a96e' font-family='serif'>V</text></svg>" />
+  <style>
+    .admin-tab { display: none; }
+    .admin-tab.active { display: block; }
+    .admin-table { width: 100%; border-collapse: collapse; }
+    .admin-table th {
+      font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-muted);
+      padding: 10px var(--space-4); text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .admin-table td {
+      font-size: 0.875rem; color: var(--text-secondary);
+      padding: 14px var(--space-4); border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .admin-table tr:last-child td { border-bottom: none; }
+    .admin-table tr:hover td { background: var(--bg-elevated); }
+    .menu-item-admin {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: var(--space-4); align-items: center;
+      padding: var(--space-4) 0; border-bottom: 1px solid var(--border);
+    }
+    .menu-item-admin:last-child { border-bottom: none; }
+    .admin-action-btn {
+      font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 6px 14px;
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      color: var(--text-muted); cursor: pointer; background: transparent;
+      transition: all 150ms ease;
+    }
+    .admin-action-btn:hover { border-color: var(--c-gold); color: var(--c-gold); }
+    .admin-action-btn--danger:hover { border-color: #e07070; color: #e07070; }
+  </style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+<!-- Header -->
+<header id="site-header" class="scrolled" role="banner">
+  <div class="header-inner">
+    <a href="index.html" class="brand" aria-label="VANTA home">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="30" height="30" stroke="#c9a96e" stroke-width="1"/>
+          <path d="M8 8 L16 24 L24 8" stroke="#c9a96e" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="brand-name">Vanta</span>
+    </a>
+    <nav aria-label="Admin navigation" style="display:flex;align-items:center;gap:0;">
+      <a href="index.html" class="nav-link">← Back to Site</a>
+    </nav>
+    <div class="header-actions">
+      <span class="t-label" style="font-size:0.6875rem;padding:6px 14px;border:1px solid rgba(201,169,110,0.3);border-radius:100px;">Portal</span>
+    </div>
+  </div>
+</header>
+
+<main class="admin-page" id="main-content">
+  <div class="admin-layout">
+
+    <!-- Sidebar -->
+    <aside>
+      <div class="account-sidebar" role="navigation" aria-label="Admin navigation">
+        <button class="account-nav-item active" data-admin-tab="overview">Overview</button>
+        <button class="account-nav-item" data-admin-tab="bookings">Bookings</button>
+        <button class="account-nav-item" data-admin-tab="menu">Menu Management</button>
+        <button class="account-nav-item" data-admin-tab="feedback">Feedback</button>
+        <button class="account-nav-item" data-admin-tab="customers">Customers</button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div>
+
+      <!-- Overview -->
+      <div class="admin-tab active" id="admin-tab-overview">
+        <h1 class="t-title" style="margin-bottom:var(--space-6);">Business Overview</h1>
+        <p class="t-caption" style="margin-bottom:var(--space-5);color:var(--c-ash);">Real-time performance metrics and client activity.</p>
+        <div class="admin-metrics">
+          <div class="metric-card">
+            <span class="metric-value">12</span>
+            <span class="metric-label">New Enquiries</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-value">38</span>
+            <span class="metric-label">Confirmed Bookings</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-value">4</span>
+            <span class="metric-label">Cancelled</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-value">27</span>
+            <span class="metric-label">Orders Received</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-value">19</span>
+            <span class="metric-label">Feedback Responses</span>
+          </div>
+        </div>
+
+        <div style="margin-top:var(--space-7);">
+          <div class="account-section">
+            <div class="account-section-header">
+              <h2 class="t-label">Recent Bookings</h2>
+              <button class="admin-action-btn" onclick="document.querySelector('[data-admin-tab=bookings]').click()">View all</button>
+            </div>
+            <div class="account-section-body" style="padding:0;">
+              <table class="admin-table" aria-label="Recent bookings">
+                <thead>
+                  <tr>
+                    <th>Reference</th>
+                    <th>Customer</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-bookings-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bookings -->
+      <div class="admin-tab" id="admin-tab-bookings">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-6);flex-wrap:wrap;gap:var(--space-4);">
+          <h1 class="t-title">Bookings</h1>
+          <div style="display:flex;gap:var(--space-2);">
+            <button class="admin-action-btn booking-status-filter active" data-status-filter="all" aria-pressed="true">All</button>
+            <button class="admin-action-btn booking-status-filter" data-status-filter="confirmed" aria-pressed="false">Confirmed</button>
+            <button class="admin-action-btn booking-status-filter" data-status-filter="pending" aria-pressed="false">Pending</button>
+            <button class="admin-action-btn booking-status-filter" data-status-filter="cancelled" aria-pressed="false">Cancelled</button>
+          </div>
+        </div>
+        <div class="account-section">
+          <div class="account-section-body" style="padding:0;">
+            <table class="admin-table" aria-label="All bookings">
+              <thead>
+                <tr>
+                  <th>Reference</th>
+                  <th>Customer</th>
+                  <th>Service</th>
+                  <th>Date & Time</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="bookings-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Menu Management -->
+      <div class="admin-tab" id="admin-tab-menu">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-6);flex-wrap:wrap;gap:var(--space-4);">
+          <h1 class="t-title">Menu Management</h1>
+          <button class="btn btn--primary" onclick="showToast('Add item form would open here in a full implementation.', 'success')">+ Add Item</button>
+        </div>
+        <div class="account-section">
+          <div class="account-section-body" id="menu-admin-list"></div>
+        </div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="admin-tab" id="admin-tab-feedback">
+        <h1 class="t-title" style="margin-bottom:var(--space-6);">Feedback Responses</h1>
+        <div id="feedback-admin-content">
+          <div class="account-section">
+            <div class="account-section-header">
+              <h2 class="t-label">Stored Responses (from this browser)</h2>
+              <button class="admin-action-btn" id="clear-feedback-btn">Clear All</button>
+            </div>
+            <div class="account-section-body" id="feedback-admin-list">
+              <p class="t-body" style="color:var(--text-muted);font-size:0.875rem;">No feedback stored yet. Submit the feedback form on the homepage to see responses here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customers -->
+      <div class="admin-tab" id="admin-tab-customers">
+        <h1 class="t-title" style="margin-bottom:var(--space-6);">Customers</h1>
+        <div class="account-section">
+          <div class="account-section-body" style="padding:0;">
+            <table class="admin-table" aria-label="Customer list">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Bookings</th>
+                  <th>Last Visit</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="customers-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <p class="t-caption" style="margin-top:var(--space-4);color:var(--c-ash);">Centralized customer directory and engagement records.</p>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script src="assets/js/data.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  /* ── Toast ── */
+  window.showToast = function (message, type) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = 'toast' + (type ? ' toast--' + type : '');
+    toast.textContent = message;
+    toast.setAttribute('role', 'status');
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(8px)';
+      toast.style.transition = 'opacity 300ms ease, transform 300ms ease';
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  };
+
+  /* ── Admin tabs ── */
+  const tabBtns = document.querySelectorAll('[data-admin-tab]');
+  const tabs = document.querySelectorAll('.admin-tab');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabs.forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('admin-tab-' + btn.dataset.adminTab)?.classList.add('active');
+    });
+  });
+
+  /* ── Booking data ── */
+  const baseBookings = VANTA.bookings || VANTA.demoBookings || [];
+  const allBookings = [
+    ...baseBookings,
+    { ref: 'MAREN-0118', service: 'Wedding Coverage', date: '2026-12-14', time: '10:00', business: 'Maren Voigt Photography', status: 'confirmed', price: '£2,200', customer: 'James & Priya Sinclair', email: 'sinclair@example.com' },
+    { ref: 'ACRE-0512', service: 'Beard Sculpture', date: '2026-10-18', time: '15:30', business: 'Acre Barbershop', status: 'pending', price: '£30', customer: 'David Chen', email: 'd.chen@example.com' },
+    { ref: 'CARTA-0091', service: 'Table for 4 — Dinner', date: '2026-10-19', time: '20:00', business: 'Carta Restaurant', status: 'confirmed', price: '—', customer: 'Sophie Laurent', email: 's.laurent@example.com' },
+    { ref: 'ACRE-0488', service: 'Hot Towel Shave', date: '2026-10-21', time: '09:30', business: 'Acre Barbershop', status: 'confirmed', price: '£45', customer: 'Marcus Webb', email: 'm.webb@example.com' },
+  ];
+
+  // Add customer/email to bookings that lack them
+  const customers = [
+    ['Alex Morgan', 'a.morgan@example.com'],
+    ['Priya Nakamura', 'p.nakamura@example.com'],
+    ['Sophie Laurent', 's.laurent@example.com'],
+    ['Marcus Webb', 'm.webb@example.com'],
+  ];
+  baseBookings.forEach((b, i) => {
+    if (!b.customer) { b.customer = customers[i % customers.length][0]; b.email = customers[i % customers.length][1]; }
+  });
+
+  /* ── Recent bookings table ── */
+  const recentTbody = document.getElementById('recent-bookings-tbody');
+  if (recentTbody) {
+    allBookings.slice(0, 5).forEach(b => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-family:var(--font-mono);font-size:0.75rem;color:var(--c-gold);">${b.ref || '—'}</td>
+        <td>${b.customer || '—'}</td>
+        <td>${b.service}</td>
+        <td style="font-family:var(--font-mono);font-size:0.75rem;">${formatDate(b.date)} ${b.time}</td>
+        <td><span class="booking-status booking-status--${b.status}">${b.status}</span></td>
+      `;
+      recentTbody.appendChild(tr);
+    });
+  }
+
+  /* ── All bookings table ── */
+  let activeFilter = 'all';
+  const bookingsTbody = document.getElementById('bookings-tbody');
+
+  function renderBookings(filter) {
+    if (!bookingsTbody) return;
+    bookingsTbody.innerHTML = '';
+    const filtered = filter === 'all' ? allBookings : allBookings.filter(b => b.status === filter);
+
+    if (filtered.length === 0) {
+      bookingsTbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:var(--space-7);color:var(--text-muted);">No bookings found.</td></tr>`;
+      return;
+    }
+
+    filtered.forEach(b => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-family:var(--font-mono);font-size:0.75rem;color:var(--c-gold);">${b.ref || '—'}</td>
+        <td>
+          <p style="color:var(--c-ivory);">${b.customer || '—'}</p>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">${b.email || ''}</p>
+        </td>
+        <td>${b.service}</td>
+        <td style="font-family:var(--font-mono);font-size:0.75rem;">${formatDate(b.date)}<br>${b.time}</td>
+        <td style="font-family:var(--font-mono);">${b.price}</td>
+        <td><span class="booking-status booking-status--${b.status}">${b.status}</span></td>
+        <td>
+          <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;">
+            ${b.status !== 'confirmed' ? `<button class="admin-action-btn" onclick="handleBookingAction('confirm','${b.ref}')">Confirm</button>` : ''}
+            ${b.status !== 'cancelled' ? `<button class="admin-action-btn admin-action-btn--danger" onclick="handleBookingAction('cancel','${b.ref}')">Cancel</button>` : ''}
+          </div>
+        </td>
+      `;
+      bookingsTbody.appendChild(tr);
+    });
+  }
+
+  window.handleBookingAction = function(action, ref) {
+    const booking = allBookings.find(b => b.ref === ref);
+    if (!booking) return;
+    if (action === 'confirm') {
+      booking.status = 'confirmed';
+      showToast(`Booking ${ref} confirmed.`, 'success');
+    } else if (action === 'cancel') {
+      booking.status = 'cancelled';
+      showToast(`Booking ${ref} cancelled.`, '');
+    }
+    renderBookings(activeFilter);
+  };
+
+  document.querySelectorAll('.booking-status-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.booking-status-filter').forEach(b => {
+        b.classList.remove('active'); b.setAttribute('aria-pressed','false');
+      });
+      btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
+      activeFilter = btn.dataset.statusFilter;
+      renderBookings(activeFilter);
+    });
+  });
+
+  renderBookings('all');
+
+  /* ── Menu management ── */
+  const menuList = document.getElementById('menu-admin-list');
+  if (menuList && VANTA.menuItems) {
+    VANTA.menuItems.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'menu-item-admin';
+      div.innerHTML = `
+        <div>
+          <p style="color:var(--c-ivory);font-family:var(--font-serif);font-size:1rem;">${item.name}</p>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">${item.desc.substring(0,80)}…</p>
+          <p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--c-gold);margin-top:4px;">£${item.price.toFixed(2)} · ${item.category}</p>
+        </div>
+        <div style="display:flex;gap:var(--space-2);">
+          <button class="admin-action-btn" onclick="showToast('Edit form would open here.','success')">Edit</button>
+          <button class="admin-action-btn admin-action-btn--danger" onclick="showToast('Item would be removed.','')">Remove</button>
+        </div>
+      `;
+      menuList.appendChild(div);
+    });
+  }
+
+  /* ── Feedback ── */
+  function renderFeedback() {
+    const list = document.getElementById('feedback-admin-list');
+    if (!list) return;
+    try {
+      const stored = JSON.parse(localStorage.getItem('vanta_feedback') || '[]');
+      if (stored.length === 0) {
+        list.innerHTML = '<p class="t-body" style="color:var(--text-muted);font-size:0.875rem;">No feedback stored yet. Submit the feedback form on the homepage to see responses here.</p>';
+        return;
+      }
+      list.innerHTML = '';
+      stored.reverse().forEach(fb => {
+        const div = document.createElement('div');
+        div.style.cssText = 'padding:var(--space-4) 0;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:var(--space-2);';
+        div.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <p style="color:var(--c-ivory);font-size:0.9375rem;">${fb.name || 'Anonymous'} <span style="font-family:var(--font-mono);font-size:0.6875rem;color:var(--c-gold);margin-left:8px;">${'★'.repeat(fb.rating)}${'☆'.repeat(5 - fb.rating)}</span></p>
+            <span class="t-caption" style="color:var(--c-ash);">${new Date(fb.timestamp).toLocaleDateString('en-GB')}</span>
+          </div>
+          ${fb.improve ? `<p style="font-size:0.875rem;color:var(--text-muted);">"${fb.improve}"</p>` : ''}
+          ${fb.purpose ? `<p class="t-caption">Purpose: ${fb.purpose}</p>` : ''}
+        `;
+        list.appendChild(div);
+      });
+    } catch(_) {}
+  }
+
+  renderFeedback();
+
+  document.getElementById('clear-feedback-btn')?.addEventListener('click', () => {
+    localStorage.removeItem('vanta_feedback');
+    renderFeedback();
+    showToast('Feedback cleared.', '');
+  });
+
+  /* ── Customers ── */
+  const customersTbody = document.getElementById('customers-tbody');
+  const clientProfiles = [
+    { name: 'Alex Morgan', email: 'a.morgan@example.com', bookings: 3, last: '2026-10-14', status: 'Active' },
+    { name: 'Sophie Laurent', email: 's.laurent@example.com', bookings: 2, last: '2026-10-19', status: 'Active' },
+    { name: 'Marcus Webb', email: 'm.webb@example.com', bookings: 1, last: '2026-10-21', status: 'Active' },
+    { name: 'Priya Nakamura', email: 'p.nakamura@example.com', bookings: 4, last: '2026-09-30', status: 'Active' },
+    { name: 'James Sinclair', email: 'sinclair@example.com', bookings: 1, last: '2026-12-14', status: 'Upcoming' },
+    { name: 'David Chen', email: 'd.chen@example.com', bookings: 1, last: '2026-10-18', status: 'Pending' },
+  ];
+  if (customersTbody) {
+    clientProfiles.forEach(c => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="color:var(--c-ivory);">${c.name}</td>
+        <td>${c.email}</td>
+        <td style="font-family:var(--font-mono);">${c.bookings}</td>
+        <td style="font-family:var(--font-mono);font-size:0.75rem;">${formatDate(c.last)}</td>
+        <td><span class="booking-status booking-status--${c.status === 'Active' ? 'confirmed' : c.status === 'Pending' ? 'pending' : 'pending'}">${c.status}</span></td>
+      `;
+      customersTbody.appendChild(tr);
+    });
+  }
+
+  /* ── Util ── */
+  function formatDate(dateStr) {
+    try {
+      const d = new Date(dateStr + 'T12:00:00');
+      return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+    } catch(_) { return dateStr; }
+  }
+})();
+</script>
+</body>
+</html>

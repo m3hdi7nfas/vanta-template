@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="VANTA — A premium multi-industry business experience platform. Explore photography, dining, bookings and more." />
+  <meta property="og:title" content="VANTA — Your business, beautifully connected." />
+  <meta property="og:description" content="Everything your customers need. One seamless experience." />
+  <meta property="og:type" content="website" />
+  <title>VANTA — Your business, beautifully connected.</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/sections.css" />
+
+  <!-- Favicon placeholder -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23080808'/><text x='16' y='22' font-size='18' text-anchor='middle' fill='%23c9a96e' font-family='serif'>V</text></svg>" />
+</head>
+<body>
+
+
+
+<!-- ── Toast Container ────────────────────────────────────── -->
+<div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+<!-- ── Cart Overlay ───────────────────────────────────────── -->
+<div class="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
+
+<!-- ── Cart FAB ───────────────────────────────────────────── -->
+<button id="cart-fab" aria-label="Open cart" title="View cart">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" x2="21" y1="6" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+  <span class="cart-badge" id="cart-count">0</span>
+</button>
+
+<!-- ── Cart Panel ─────────────────────────────────────────── -->
+<aside id="cart-panel" aria-label="Shopping cart" aria-hidden="true">
+  <div class="cart-header">
+    <div>
+      <p class="t-label">Your Order</p>
+      <h2 style="font-family:var(--font-serif);font-weight:300;font-size:1.5rem;margin-top:4px;">Carta Restaurant</h2>
+    </div>
+    <button id="cart-close" class="header-icon-btn" aria-label="Close cart">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="cart-items" id="cart-items-list">
+    <div class="cart-empty" id="cart-empty">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color:var(--c-ash)"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" x2="21" y1="6" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <p class="t-body" style="text-align:center;">Your cart is empty.<br>Add items from the menu.</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cart-footer" style="display:none;">
+    <div class="cart-line">
+      <span class="t-caption">Subtotal</span>
+      <span class="t-body" id="cart-subtotal">£0.00</span>
+    </div>
+    <div class="cart-line">
+      <span class="t-caption">Service charge (12.5%)</span>
+      <span class="t-body" id="cart-service">£0.00</span>
+    </div>
+    <div class="cart-line" style="padding-top:var(--space-3);border-top:1px solid var(--border);">
+      <span style="font-size:0.875rem;font-weight:500;color:var(--text-secondary);">Total</span>
+      <span class="cart-total" id="cart-total">£0.00</span>
+    </div>
+    <button class="btn btn--primary" style="width:100%;justify-content:center;" id="checkout-btn">Place Order</button>
+  </div>
+</aside>
+
+<!-- ── Checkout Overlay ───────────────────────────────────── -->
+<div class="checkout-overlay" id="checkout-overlay" aria-modal="true" role="dialog" aria-hidden="true">
+  <div class="checkout-modal">
+    <div class="checkout-modal-header">
+      <h2 class="t-title">Complete Your Order</h2>
+      <button class="header-icon-btn" id="checkout-close" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="checkout-modal-body" id="checkout-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+        <div class="form-group">
+          <label class="form-label" for="co-fname">First name</label>
+          <input class="form-input" id="co-fname" type="text" placeholder="Alex" autocomplete="given-name" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="co-lname">Last name</label>
+          <input class="form-input" id="co-lname" type="text" placeholder="Morgan" autocomplete="family-name" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="co-email">Email</label>
+        <input class="form-input" id="co-email" type="email" placeholder="alex@example.com" autocomplete="email" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="co-type">Order type</label>
+        <select class="form-select" id="co-type">
+          <option value="dine-in">Dine In</option>
+          <option value="takeaway">Takeaway</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="co-notes">Special notes</label>
+        <textarea class="form-textarea" id="co-notes" placeholder="Allergies, special requests…" style="min-height:80px;"></textarea>
+      </div>
+      <button class="btn btn--primary" style="width:100%;justify-content:center;" id="confirm-order-btn">Confirm Order</button>
+    </div>
+    <div id="checkout-success" style="display:none;padding:var(--space-8) var(--space-6);text-align:center;display:flex;flex-direction:column;align-items:center;gap:var(--space-5);">
+      <div style="width:64px;height:64px;border-radius:50%;border:1px solid var(--c-gold);display:flex;align-items:center;justify-content:center;color:var(--c-gold);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3 class="t-title">Order Confirmed</h3>
+      <p class="t-body" style="max-width:320px;">Thank you for your order. Your request has been received and the restaurant will be in touch to confirm shortly.</p>
+      <div class="booking-ref" id="order-ref">ORDER — #00001</div>
+      <button class="btn btn--ghost" id="close-success-btn">Continue Exploring</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Header ─────────────────────────────────────────────── -->
+<header id="site-header" role="banner">
+  <div class="header-inner">
+    <a href="#" class="brand" aria-label="VANTA home">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="30" height="30" stroke="#c9a96e" stroke-width="1"/>
+          <path d="M8 8 L16 24 L24 8" stroke="#c9a96e" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="brand-name">Vanta</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Primary navigation">
+      <a href="#" class="nav-link active" data-nav="home">Home</a>
+      <a href="#experiences" class="nav-link" data-nav="experiences">Experiences</a>
+      <a href="#gallery" class="nav-link" data-nav="gallery">Gallery</a>
+      <a href="#restaurant" class="nav-link" data-nav="menu">Menu</a>
+      <a href="#booking" class="nav-link" data-nav="booking">Bookings</a>
+      <a href="#services" class="nav-link" data-nav="services">Services</a>
+      <a href="#reviews" class="nav-link" data-nav="reviews">Reviews</a>
+      <a href="#about" class="nav-link" data-nav="about">About</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="theme-header-btn" id="header-theme-btn" aria-label="Open Style Studio">
+        <span class="theme-header-dot"></span>
+        Style Studio
+      </button>
+      <button class="header-icon-btn" id="account-btn" aria-label="Account" title="My account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </button>
+      <a href="#booking" class="btn btn--primary header-cta">Book Now</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-mobile">
+        <span class="nav-toggle-line"></span>
+        <span class="nav-toggle-line"></span>
+        <span class="nav-toggle-line"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ── Mobile Nav ─────────────────────────────────────────── -->
+<nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation" aria-hidden="true">
+  <a href="#" class="nav-mobile-link" data-mobile-nav>Home</a>
+  <a href="#experiences" class="nav-mobile-link" data-mobile-nav>Experiences</a>
+  <a href="#gallery" class="nav-mobile-link" data-mobile-nav>Gallery</a>
+  <a href="#restaurant" class="nav-mobile-link" data-mobile-nav>Menu</a>
+  <a href="#booking" class="nav-mobile-link" data-mobile-nav>Bookings</a>
+  <a href="#services" class="nav-mobile-link" data-mobile-nav>Services</a>
+  <a href="#reviews" class="nav-mobile-link" data-mobile-nav>Reviews</a>
+  <a href="#about" class="nav-mobile-link" data-mobile-nav>About</a>
+  <div class="nav-mobile-footer">
+    <a href="#booking" class="btn btn--primary" data-mobile-nav>Book a Session</a>
+  </div>
+</nav>
+
+<!-- ======================================================== -->
+<!-- MAIN CONTENT                                             -->
+<!-- ======================================================== -->
+<main id="main-content">
+
+<!-- ── Hero ──────────────────────────────────────────────── -->
+<section id="hero" aria-label="Hero">
+  <div class="hero-media">
+    <!-- Free CDN video from Mixkit -->
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="assets/img/hero.jpg"
+      preload="none"
+      aria-hidden="true"
+      id="hero-video"
+    >
+      <source src="https://cdn.coverr.co/videos/coverr-open-space-in-a-coffee-shop-4808/1080p.mp4" type="video/mp4" />
+      <!-- Fallback: just the poster -->
+    </video>
+    <!-- Prefers-reduced-motion: hide video via CSS, show poster -->
+    <img
+      class="hero-poster"
+      src="assets/img/hero.jpg"
+      alt="Cinematic atrium interior — VANTA platform hero"
+      id="hero-poster-fallback"
+      style="display:none;"
+      loading="eager"
+    />
+  </div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-inner">
+      <div class="hero-meta">
+        <span class="hero-status-dot" aria-hidden="true"></span>
+        <span class="t-caption" style="color:rgba(250,248,245,0.5);">London, UK &ensp;·&ensp; Est. 2019</span>
+      </div>
+      <h1 class="hero-headline">
+        Your business,<br><em>beautifully</em><br>connected.
+      </h1>
+      <p class="hero-subline">
+        Everything your customers need.<br>One seamless experience.
+      </p>
+      <div class="hero-actions">
+        <a href="#experiences" class="btn btn--primary">Explore the Experience</a>
+        <a href="#gallery" class="btn btn--text" style="color:rgba(250,248,245,0.6);">See what's possible</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <span class="t-caption" style="color:rgba(250,248,245,0.3);font-size:0.5625rem;">Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── Statement ─────────────────────────────────────────── -->
+<section id="statement" aria-labelledby="statement-heading">
+  <div class="statement-layout">
+    <div class="reveal">
+      <p class="t-label" style="margin-bottom:var(--space-5);">The Premise</p>
+      <h2 id="statement-heading" class="statement-headline">
+        Good businesses deserve better digital experiences.
+      </h2>
+    </div>
+    <div class="statement-body reveal reveal--delay-2">
+      <span class="statement-number">01 / 04</span>
+      <p class="t-body">
+        Every appointment missed, every order abandoned, every customer who couldn't find what they needed — these are the costs of a disconnected digital presence.
+      </p>
+      <p class="t-body">
+        VANTA is what a truly integrated business website feels like: a single, beautifully designed experience that handles bookings, menus, galleries, and customer relationships without compromise.
+      </p>
+      <div class="divider"></div>
+      <a href="#experiences" class="btn btn--ghost" style="align-self:flex-start;">Explore Experiences</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Experience Selector ────────────────────────────────── -->
+<section id="experiences" aria-labelledby="exp-heading">
+  <div class="experiences-header">
+    <div>
+      <p class="t-label reveal">Select an industry</p>
+      <h2 id="exp-heading" class="t-headline reveal reveal--delay-1" style="margin-top:var(--space-3);">Four industries.<br>One platform.</h2>
+    </div>
+    <p class="t-body reveal reveal--delay-2" style="max-width:340px;">Each experience below is meticulously tailored to showcase modern business presentation and seamless customer journeys.</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="exp-tabs" role="tablist" aria-label="Business experiences">
+    <button class="exp-tab active" role="tab" aria-selected="true" aria-controls="exp-panel-photography" id="tab-photography" data-exp="photography">Photography Studio</button>
+    <button class="exp-tab" role="tab" aria-selected="false" aria-controls="exp-panel-restaurant" id="tab-restaurant" data-exp="restaurant">Restaurant</button>
+    <button class="exp-tab" role="tab" aria-selected="false" aria-controls="exp-panel-salon" id="tab-salon" data-exp="salon">Salon & Barbershop</button>
+    <button class="exp-tab" role="tab" aria-selected="false" aria-controls="exp-panel-service" id="tab-service" data-exp="service">Service Business</button>
+  </div>
+
+  <!-- Panels -->
+  <div class="exp-panels">
+
+    <!-- Photography -->
+    <div class="exp-panel active" id="exp-panel-photography" role="tabpanel" aria-labelledby="tab-photography">
+      <div class="exp-panel-image">
+        <img
+          src="assets/img/gallery-portrait-1.jpg"
+          alt="Fine art portrait photography"
+          loading="lazy"
+          width="600" height="750"
+        />
+      </div>
+      <div class="exp-panel-content">
+        <span class="exp-industry-tag">Photography Studio</span>
+        <h3 class="exp-name">Maren&nbsp;Voigt<br>Photography</h3>
+        <p class="t-body">An editorial photography studio specialising in portraiture, weddings, and commercial campaigns. Each session is crafted with precision and intention.</p>
+        <div class="exp-services">
+          <div class="exp-service-item">Portrait Sessions — from £350</div>
+          <div class="exp-service-item">Wedding Coverage — from £2,200</div>
+          <div class="exp-service-item">Commercial & Editorial — POA</div>
+          <div class="exp-service-item">Fine Art Prints & Exhibitions</div>
+        </div>
+        <div class="exp-actions">
+          <a href="#gallery" class="btn btn--primary">View Gallery</a>
+          <a href="#booking" class="btn btn--text">Book a Session</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Restaurant -->
+    <div class="exp-panel" id="exp-panel-restaurant" role="tabpanel" aria-labelledby="tab-restaurant">
+      <div class="exp-panel-image">
+        <img
+          src="assets/img/restaurant-hero.jpg"
+          alt="Carta restaurant — intimate fine dining interior"
+          loading="lazy"
+          width="600" height="750"
+        />
+      </div>
+      <div class="exp-panel-content">
+        <span class="exp-industry-tag">Restaurant</span>
+        <h3 class="exp-name">Carta<br>Restaurant</h3>
+        <p class="t-body">Contemporary European cuisine served in an intimate 40-cover dining room in Marylebone. Seasonal ingredients. Considered cooking. A menu that changes with the harvest.</p>
+        <div class="exp-services">
+          <div class="exp-service-item">Dinner — Tuesday to Saturday</div>
+          <div class="exp-service-item">Tasting menu — 7 courses, £95</div>
+          <div class="exp-service-item">À la carte & wine pairings</div>
+          <div class="exp-service-item">Private dining available</div>
+        </div>
+        <div class="exp-actions">
+          <a href="#restaurant" class="btn btn--primary">View Menu</a>
+          <a href="#booking" class="btn btn--text">Reserve a Table</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Salon -->
+    <div class="exp-panel" id="exp-panel-salon" role="tabpanel" aria-labelledby="tab-salon">
+      <div class="exp-panel-image">
+        <img
+          src="assets/img/salon-hero.jpg"
+          alt="Acre barbershop — dark wood and marble interior"
+          loading="lazy"
+          width="600" height="750"
+        />
+      </div>
+      <div class="exp-panel-content">
+        <span class="exp-industry-tag">Salon & Barbershop</span>
+        <h3 class="exp-name">Acre<br>Barbershop</h3>
+        <p class="t-body">A considered grooming studio for those who care about craft. Hot towel shaves, precision cuts, and personalised consultations in a calm, unhurried environment.</p>
+        <div class="exp-services">
+          <div class="exp-service-item">Classic Cut — £38</div>
+          <div class="exp-service-item">Hot Towel Shave — £45</div>
+          <div class="exp-service-item">Cut & Shave — £75</div>
+          <div class="exp-service-item">Beard Sculpture — £30</div>
+        </div>
+        <div class="exp-actions">
+          <a href="#booking" class="btn btn--primary">Book Appointment</a>
+          <a href="#services" class="btn btn--text">View Services</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Business -->
+    <div class="exp-panel" id="exp-panel-service" role="tabpanel" aria-labelledby="tab-service">
+      <div class="exp-panel-image">
+        <img
+          src="assets/img/gallery-commercial-1.jpg"
+          alt="Meridian consulting — professional service business"
+          loading="lazy"
+          width="600" height="750"
+        />
+      </div>
+      <div class="exp-panel-content">
+        <span class="exp-industry-tag">Service Business</span>
+        <h3 class="exp-name">Meridian<br>Consulting</h3>
+        <p class="t-body">Strategy, creative direction, and brand consultancy for growth-stage companies. Structured engagements. Clear deliverables. Measurable outcomes.</p>
+        <div class="exp-services">
+          <div class="exp-service-item">Brand Strategy — from £4,500</div>
+          <div class="exp-service-item">Creative Direction — from £3,200</div>
+          <div class="exp-service-item">Digital Experience Audit — from £1,800</div>
+          <div class="exp-service-item">Advisory retainers available</div>
+        </div>
+        <div class="exp-actions">
+          <a href="#booking" class="btn btn--primary">Book a Consultation</a>
+          <a href="#services" class="btn btn--text">See Engagements</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Gallery ────────────────────────────────────────────── -->
+<section id="gallery" class="section-theme-darkroom" aria-labelledby="gallery-heading">
+  <div class="gallery-header">
+    <div>
+      <p class="t-label reveal">Photography Portfolio</p>
+      <h2 id="gallery-heading" class="t-headline reveal reveal--delay-1" style="margin-top:var(--space-3);">Maren Voigt<br>Photography</h2>
+    </div>
+    <div class="gallery-filters reveal reveal--delay-2" role="group" aria-label="Gallery filters">
+      <button class="gallery-filter active" data-filter="all" aria-pressed="true">All Work</button>
+      <button class="gallery-filter" data-filter="portraits" aria-pressed="false">Portraits</button>
+      <button class="gallery-filter" data-filter="weddings" aria-pressed="false">Weddings</button>
+      <button class="gallery-filter" data-filter="commercial" aria-pressed="false">Commercial</button>
+      <button class="gallery-filter" data-filter="editorial" aria-pressed="false">Editorial</button>
+    </div>
+  </div>
+
+  <div class="gallery-grid" id="gallery-grid" aria-label="Photography gallery">
+    <!-- Items injected by JS -->
+  </div>
+
+  <div style="text-align:center;margin-top:var(--space-8);">
+    <a href="#booking" class="btn btn--ghost">Book a Session</a>
+  </div>
+</section>
+
+<!-- ── Lightbox ───────────────────────────────────────────── -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close image viewer">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <img class="lightbox-media" id="lightbox-img" src="" alt="" />
+  <button class="lightbox-next" id="lightbox-next" aria-label="Next image">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <div class="lightbox-caption">
+    <p class="t-caption" id="lightbox-title"></p>
+    <p class="t-caption" style="color:var(--c-ash);margin-top:4px;" id="lightbox-cat"></p>
+  </div>
+</div>
+
+<!-- ── Restaurant ────────────────────────────────────────── -->
+<section id="restaurant" class="section-theme-bordeaux" aria-labelledby="rest-heading">
+  <div class="restaurant-header">
+    <div class="reveal">
+      <p class="t-label" style="margin-bottom:var(--space-4);">Restaurant</p>
+      <h2 id="rest-heading" class="t-headline">Carta<br>Restaurant</h2>
+      <p class="t-body" style="margin-top:var(--space-4);max-width:400px;">Contemporary European cuisine in Marylebone. Seasonal ingredients. A menu that rewards curiosity.</p>
+      <div style="margin-top:var(--space-5);">
+        <p class="t-caption" style="color:var(--c-ash);margin-bottom:4px;">Location</p>
+        <p class="t-body">14 Chiltern Street, Marylebone, London W1U 7QA</p>
+        <p class="t-caption" style="color:var(--c-ash);margin-top:var(--space-2);letter-spacing:0.06em;">Central London &bull; Reservations Recommended</p>
+      </div>
+    </div>
+    <div class="restaurant-meta-block reveal reveal--delay-2">
+      <p class="t-label" style="margin-bottom:var(--space-3);">Opening Hours</p>
+      <div class="restaurant-hours">
+        <div class="restaurant-hour-group">
+          <span class="restaurant-hour-day">Tuesday–Thursday</span>
+          <span class="restaurant-hour-time">18:00 – 22:30</span>
+        </div>
+        <div class="restaurant-hour-group">
+          <span class="restaurant-hour-day">Friday–Saturday</span>
+          <span class="restaurant-hour-time">18:00 – 23:00</span>
+        </div>
+        <div class="restaurant-hour-group">
+          <span class="restaurant-hour-day">Sunday–Monday</span>
+          <span class="restaurant-hour-time">Closed</span>
+        </div>
+      </div>
+      <div style="margin-top:var(--space-5);">
+        <a href="#booking" class="btn btn--ghost" style="align-self:flex-start;">Reserve a Table</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu categories -->
+  <div class="menu-categories" role="group" aria-label="Menu categories">
+    <button class="menu-cat-btn active" data-cat="all" aria-pressed="true">All</button>
+    <button class="menu-cat-btn" data-cat="starters" aria-pressed="false">Starters</button>
+    <button class="menu-cat-btn" data-cat="mains" aria-pressed="false">Mains</button>
+    <button class="menu-cat-btn" data-cat="desserts" aria-pressed="false">Desserts</button>
+    <button class="menu-cat-btn" data-cat="drinks" aria-pressed="false">Drinks</button>
+  </div>
+
+  <!-- Menu grid -->
+  <div class="menu-grid" id="menu-grid" aria-label="Menu items">
+    <!-- Injected by JS -->
+  </div>
+</section>
+
+<!-- ── Booking ────────────────────────────────────────────── -->
+<section id="booking" class="section-theme-atelier" aria-labelledby="booking-heading">
+  <div style="max-width:var(--max-w-wide);margin:0 auto;padding:0 var(--space-7);margin-bottom:var(--space-9);">
+    <p class="t-label reveal">Online Booking</p>
+    <h2 id="booking-heading" class="t-headline reveal reveal--delay-1" style="margin-top:var(--space-3);">Reserve your<br>appointment.</h2>
+  </div>
+
+  <div class="booking-layout">
+    <div class="booking-info reveal">
+      <p class="t-label" style="margin-bottom:var(--space-2);">Selected Business</p>
+      <h3 class="t-title">Acre Barbershop</h3>
+      <div class="divider"></div>
+      <p class="t-body">Located at 22 Duke Street, Mayfair. Expert grooming services with master barbers. Walk-ins welcome, appointments preferred.</p>
+      <div style="margin-top:var(--space-5);display:flex;flex-direction:column;gap:var(--space-3);">
+        <div style="display:flex;gap:var(--space-3);align-items:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--c-gold);flex-shrink:0;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="t-body" style="font-size:0.875rem;">Mon–Sat: 09:00 – 19:00</span>
+        </div>
+        <div style="display:flex;gap:var(--space-3);align-items:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--c-gold);flex-shrink:0;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span class="t-body" style="font-size:0.875rem;">22 Duke Street, Mayfair, London</span>
+        </div>
+      </div>
+      <div style="margin-top:var(--space-6);padding:var(--space-4);background:rgba(201,169,110,0.05);border:1px solid rgba(201,169,110,0.15);border-radius:4px;">
+        <p style="font-size:0.75rem;color:var(--c-ivory);letter-spacing:0.04em;line-height:1.6;">
+          <strong style="color:var(--c-gold);">Instant Confirmation:</strong> Your slot is reserved in real time. Reschedule or cancel anytime up to 2 hours prior.
+        </p>
+      </div>
+    </div>
+
+    <div class="booking-form-area">
+      <!-- Progress -->
+      <div class="booking-steps" aria-label="Booking progress">
+        <div class="booking-step active" id="step-ind-1">
+          <div class="step-num">01</div>
+          <span class="step-label">Service</span>
+        </div>
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="booking-step" id="step-ind-2">
+          <div class="step-num">02</div>
+          <span class="step-label">Date & Time</span>
+        </div>
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="booking-step" id="step-ind-3">
+          <div class="step-num">03</div>
+          <span class="step-label">Details</span>
+        </div>
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="booking-step" id="step-ind-4">
+          <div class="step-num">04</div>
+          <span class="step-label">Confirm</span>
+        </div>
+      </div>
+
+      <!-- Step 1: Service -->
+      <div id="booking-step-1" class="booking-step-content active">
+        <h3 class="t-title" style="margin-bottom:var(--space-5);">Choose a Service</h3>
+        <div class="service-options" id="service-options">
+          <!-- Injected by JS -->
+        </div>
+        <div class="booking-nav" style="margin-top:var(--space-6);">
+          <div></div>
+          <button class="btn btn--primary" id="step1-next" disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Date & Time -->
+      <div id="booking-step-2" class="booking-step-content">
+        <h3 class="t-title" style="margin-bottom:var(--space-5);">Select Date & Time</h3>
+        <div class="booking-calendar">
+          <div class="cal-header">
+            <button class="cal-nav" id="cal-prev" aria-label="Previous month">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <span class="cal-title" id="cal-title"></span>
+            <button class="cal-nav" id="cal-next" aria-label="Next month">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+          <div class="cal-grid" id="cal-grid" role="grid" aria-label="Calendar">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+        <div style="margin-top:var(--space-5);">
+          <p class="t-label" style="margin-bottom:var(--space-4);" id="time-slots-label">Available Times</p>
+          <div class="time-slots" id="time-slots" role="group" aria-label="Available time slots">
+            <p class="t-body" style="color:var(--text-muted);font-size:0.875rem;" id="time-slots-hint">Select a date to see available times.</p>
+          </div>
+        </div>
+        <div class="booking-nav" style="margin-top:var(--space-6);">
+          <button class="btn btn--ghost" id="step2-back">Back</button>
+          <button class="btn btn--primary" id="step2-next" disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Details -->
+      <div id="booking-step-3" class="booking-step-content">
+        <h3 class="t-title" style="margin-bottom:var(--space-5);">Your Details</h3>
+        <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+            <div class="form-group">
+              <label class="form-label" for="bk-fname">First name <span aria-label="required">*</span></label>
+              <input class="form-input" id="bk-fname" type="text" placeholder="Alex" required autocomplete="given-name" />
+              <span class="form-error" id="bk-fname-err" role="alert" style="display:none;"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="bk-lname">Last name <span aria-label="required">*</span></label>
+              <input class="form-input" id="bk-lname" type="text" placeholder="Morgan" required autocomplete="family-name" />
+              <span class="form-error" id="bk-lname-err" role="alert" style="display:none;"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bk-email">Email address <span aria-label="required">*</span></label>
+            <input class="form-input" id="bk-email" type="email" placeholder="alex@example.com" required autocomplete="email" />
+            <span class="form-error" id="bk-email-err" role="alert" style="display:none;"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bk-phone">Phone number</label>
+            <input class="form-input" id="bk-phone" type="tel" placeholder="+44 7700 000000" autocomplete="tel" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bk-notes">Additional notes</label>
+            <textarea class="form-textarea" id="bk-notes" placeholder="Any preferences or requirements…"></textarea>
+          </div>
+        </div>
+        <div class="booking-nav" style="margin-top:var(--space-6);">
+          <button class="btn btn--ghost" id="step3-back">Back</button>
+          <button class="btn btn--primary" id="step3-next">Review Booking</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Review & Confirm -->
+      <div id="booking-step-4" class="booking-step-content">
+        <h3 class="t-title" style="margin-bottom:var(--space-5);">Review & Confirm</h3>
+        <div class="booking-summary" id="booking-summary">
+          <!-- Injected by JS -->
+        </div>
+        <div style="margin-top:var(--space-5);padding:var(--space-4);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:4px;">
+          <p style="font-size:0.75rem;color:var(--c-ash);letter-spacing:0.03em;line-height:1.6;">Please review your details carefully. A confirmation summary will be saved directly to your account.</p>
+        </div>
+        <div class="booking-nav" style="margin-top:var(--space-6);">
+          <button class="btn btn--ghost" id="step4-back">Back</button>
+          <button class="btn btn--primary" id="step4-confirm">Confirm Booking</button>
+        </div>
+      </div>
+
+      <!-- Step 5: Success -->
+      <div id="booking-step-5" class="booking-step-content">
+        <div class="booking-success">
+          <div class="booking-success-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3 class="t-title">Booking Confirmed</h3>
+          <p class="t-body" style="max-width:360px;text-align:center;">Your appointment has been confirmed. A calendar invitation and confirmation summary have been generated.</p>
+          <div class="booking-ref" id="booking-ref-display">REF — VNT-84920</div>
+          <div id="booking-confirm-summary" style="width:100%;"></div>
+          <button class="btn btn--ghost" id="booking-restart">Book Another Appointment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Services ───────────────────────────────────────────── -->
+<section id="services" class="section-theme-atelier" aria-labelledby="services-heading">
+  <div style="max-width:var(--max-w-wide);margin:0 auto var(--space-9);padding:0 var(--space-7);">
+    <p class="t-label reveal">Acre Atelier &bull; Grooming & Styling</p>
+    <h2 id="services-heading" class="t-headline reveal reveal--delay-1" style="margin-top:var(--space-3);">Artisan Services & Treatment Menu</h2>
+    <p class="t-body reveal reveal--delay-2" style="max-width:540px;margin-top:var(--space-3);color:var(--text-secondary);">
+      Traditional straight-razor rituals, tailored scissor sculpting, and bespoke grooming delivered by master barbers in our Mayfair atelier.
+    </p>
+  </div>
+  <div class="services-grid" id="services-grid">
+    <article class="service-card reveal">
+      <span class="service-card-num">01</span>
+      <h3 class="service-card-name">Classic Cut</h3>
+      <p class="service-card-desc">A precision haircut tailored to your face shape, hair type, and personal style. Includes consultation, wash, cut, and finish.</p>
+      <div class="service-card-footer">
+        <span class="service-card-duration">45 min</span>
+        <span class="service-card-price">£38</span>
+      </div>
+      <a href="#booking" class="btn btn--ghost" data-service-pick="bs1" style="margin-top:var(--space-4);width:100%;justify-content:center;font-size:0.6875rem;">Reserve Appointment</a>
+    </article>
+    <article class="service-card reveal reveal--delay-1">
+      <span class="service-card-num">02</span>
+      <h3 class="service-card-name">Hot Towel Shave</h3>
+      <p class="service-card-desc">Traditional straight-razor shave with pre-shave oil, hot towel, premium cream, and aftershave balm. A ritual in itself.</p>
+      <div class="service-card-footer">
+        <span class="service-card-duration">40 min</span>
+        <span class="service-card-price">£45</span>
+      </div>
+      <a href="#booking" class="btn btn--ghost" data-service-pick="bs2" style="margin-top:var(--space-4);width:100%;justify-content:center;font-size:0.6875rem;">Reserve Appointment</a>
+    </article>
+    <article class="service-card reveal reveal--delay-2">
+      <span class="service-card-num">03</span>
+      <h3 class="service-card-name">Cut & Shave</h3>
+      <p class="service-card-desc">The full service. Classic cut followed immediately by a hot towel shave. The complete grooming experience.</p>
+      <div class="service-card-footer">
+        <span class="service-card-duration">80 min</span>
+        <span class="service-card-price">£75</span>
+      </div>
+      <a href="#booking" class="btn btn--ghost" data-service-pick="bs3" style="margin-top:var(--space-4);width:100%;justify-content:center;font-size:0.6875rem;">Reserve Appointment</a>
+    </article>
+    <article class="service-card reveal">
+      <span class="service-card-num">04</span>
+      <h3 class="service-card-name">Beard Sculpture</h3>
+      <p class="service-card-desc">Expert beard shaping, sculpting, and conditioning. Includes hot towel, line detailing, and beard oil treatment.</p>
+      <div class="service-card-footer">
+        <span class="service-card-duration">30 min</span>
+        <span class="service-card-price">£30</span>
+      </div>
+      <a href="#booking" class="btn btn--ghost" data-service-pick="bs4" style="margin-top:var(--space-4);width:100%;justify-content:center;font-size:0.6875rem;">Reserve Appointment</a>
+    </article>
+    <article class="service-card reveal reveal--delay-1">
+      <span class="service-card-num">05</span>
+      <h3 class="service-card-name">Head Shave</h3>
+      <p class="service-card-desc">Wet head shave with straight razor, hot towels, and scalp massage. Includes scalp conditioning treatment.</p>
+      <div class="service-card-footer">
+        <span class="service-card-duration">50 min</span>
+        <span class="service-card-price">£42</span>
+      </div>
+      <a href="#booking" class="btn btn--ghost" data-service-pick="bs1" style="margin-top:var(--space-4);width:100%;justify-content:center;font-size:0.6875rem;">Reserve Appointment</a>
+    </article>
+    <article class="service-card reveal reveal--delay-2">
+      <span class="service-card-num">06</span>
+      <h3 class="service-card-name">Junior Cut</h3>
+      <p class="service-card-desc">Precision cut for clients under 16. Patient, attentive service in a calm environment.</p>
+      <div class="service-card-footer">
+        <span class="service-card-duration">30 min</span>
+        <span class="service-card-price">£22</span>
+      </div>
+      <a href="#booking" class="btn btn--ghost" data-service-pick="bs1" style="margin-top:var(--space-4);width:100%;justify-content:center;font-size:0.6875rem;">Reserve Appointment</a>
+    </article>
+  </div>
+</section>
+
+<!-- ── Process ───────────────────────────────────────────── -->
+<section id="process" class="section-theme-blueprint" aria-labelledby="process-heading">
+  <div style="max-width:var(--max-w-wide);margin:0 auto;padding:0 var(--space-7);">
+    <p class="t-label reveal">How it Works</p>
+    <h2 id="process-heading" class="t-headline reveal reveal--delay-1" style="margin-top:var(--space-3);max-width:520px;">The customer journey, simplified.</h2>
+  </div>
+  <div class="process-steps">
+    <div class="process-step reveal">
+      <div class="process-step-num">01</div>
+      <h3 class="process-step-title">Discover</h3>
+      <p class="process-step-desc">Browse services, view portfolios, explore menus. Everything is clear and beautifully presented.</p>
+    </div>
+    <div class="process-step reveal reveal--delay-1">
+      <div class="process-step-num">02</div>
+      <h3 class="process-step-title">Explore</h3>
+      <p class="process-step-desc">Find what you need. Filter galleries, browse dishes, understand offerings before committing.</p>
+    </div>
+    <div class="process-step reveal reveal--delay-2">
+      <div class="process-step-num">03</div>
+      <h3 class="process-step-title">Book or Order</h3>
+      <p class="process-step-desc">Reserve an appointment, place a table order, or send an enquiry in just a few steps.</p>
+    </div>
+    <div class="process-step reveal reveal--delay-3">
+      <div class="process-step-num">04</div>
+      <h3 class="process-step-title">Confirmed</h3>
+      <p class="process-step-desc">Receive immediate confirmation. Manage your bookings from your account at any time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Customer Reviews & Verified Patron Ratings ───────────── -->
+<section id="reviews" class="section-theme-champagne" aria-labelledby="reviews-heading">
+  <div class="reviews-container">
+    <div class="reviews-header">
+      <div>
+        <p class="t-label reveal">Verified Patron Sentiment</p>
+        <h2 id="reviews-heading" class="t-headline reveal reveal--delay-1" style="margin-top:var(--space-3);">Acclaimed Across<br>Every Experience.</h2>
+        <p class="t-body reveal reveal--delay-2" style="max-width:480px;margin-top:var(--space-3);color:var(--text-secondary);">
+          Direct impressions from verified commissions, private dining guests, and atelier clients across London.
+        </p>
+      </div>
+
+      <!-- Rating Scorecard -->
+      <div class="reviews-scorecard reveal reveal--delay-2">
+        <div class="reviews-score-num">4.9</div>
+        <div class="reviews-score-info">
+          <div class="reviews-stars" aria-label="5 out of 5 stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="t-caption" style="color:var(--c-ivory);font-weight:500;">Overall Patron Rating</p>
+          <p class="t-caption" style="color:var(--text-muted);font-size:0.6875rem;">Based on 420+ verified bookings & reservations</p>
+          <div class="reviews-meta-pills">
+            <span class="reviews-meta-pill">99.2% Recommend</span>
+            <span class="reviews-meta-pill">4.9★ Carta</span>
+            <span class="reviews-meta-pill">4.9★ Photography</span>
+            <span class="reviews-meta-pill">4.8★ Atelier</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Pills -->
+    <div class="reviews-filters reveal" role="tablist" aria-label="Review filter">
+      <button class="reviews-filter-btn active" data-review-filter="all">All Experiences (6)</button>
+      <button class="reviews-filter-btn" data-review-filter="dining">Carta Restaurant & Wine Bar</button>
+      <button class="reviews-filter-btn" data-review-filter="photo">Maren Voigt Photography</button>
+      <button class="reviews-filter-btn" data-review-filter="salon">Acre Atelier & Grooming</button>
+    </div>
+
+    <!-- Reviews Grid -->
+    <div class="reviews-grid" id="reviews-grid">
+      <!-- Review 1: Carta -->
+      <article class="review-card reveal" data-review-cat="dining">
+        <div class="review-card-top">
+          <div class="reviews-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <span class="review-badge">Carta Restaurant</span>
+        </div>
+        <p class="review-text">“The seven-course tasting menu paired by sommelier Julien was breathtaking. The wagyu carpaccio with pickled shimeji and the Valrhona fondant set a benchmark for contemporary European dining in London.”</p>
+        <div class="review-author">
+          <div class="review-avatar">EM</div>
+          <div>
+            <p class="review-author-name">Lady Eleanor Montagu</p>
+            <p class="review-author-meta">Verified Dining Guest &bull; Private Table</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Review 2: Photography -->
+      <article class="review-card reveal reveal--delay-1" data-review-cat="photo">
+        <div class="review-card-top">
+          <div class="reviews-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <span class="review-badge">Maren Voigt Photography</span>
+        </div>
+        <p class="review-text">“Maren captured our private wedding celebration with an editorial sensibility that felt timeless rather than staged. The natural lighting, composition, and intimate moments were documented with absolute mastery.”</p>
+        <div class="review-author">
+          <div class="review-avatar">JM</div>
+          <div>
+            <p class="review-author-name">Julian Moreau</p>
+            <p class="review-author-meta">Verified Commission &bull; Editorial & Portrait</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Review 3: Acre -->
+      <article class="review-card reveal reveal--delay-2" data-review-cat="salon">
+        <div class="review-card-top">
+          <div class="reviews-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <span class="review-badge">Acre Atelier</span>
+        </div>
+        <p class="review-text">“The hot towel straight-razor shave is an absolute masterclass in craft. The calm atmosphere, tailored single-malt hospitality, and precision scissor sculpt make this an unmissable bi-weekly ritual.”</p>
+        <div class="review-author">
+          <div class="review-avatar">MS</div>
+          <div>
+            <p class="review-author-name">Dr. Marcus Sterling</p>
+            <p class="review-author-meta">Verified Client &bull; Cut & Shave Ritual</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Review 4: Photography -->
+      <article class="review-card reveal" data-review-cat="photo">
+        <div class="review-card-top">
+          <div class="reviews-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <span class="review-badge">Maren Voigt Photography</span>
+        </div>
+        <p class="review-text">“Our wedding gallery arrived two weeks ahead of schedule and left both our families speechless. Every candid tear, golden-hour silhouette, and quiet glance was captured with cinematic elegance.”</p>
+        <div class="review-author">
+          <div class="review-avatar">CT</div>
+          <div>
+            <p class="review-author-name">Camilla & David Thorne</p>
+            <p class="review-author-meta">Verified Commission &bull; Full Wedding Coverage</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Review 5: Carta -->
+      <article class="review-card reveal reveal--delay-1" data-review-cat="dining">
+        <div class="review-card-top">
+          <div class="reviews-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <span class="review-badge">Carta Restaurant</span>
+        </div>
+        <p class="review-text">“Hosted our board dinner in the private mezzanine. The acoustics, seamless unobtrusive service, and wild mushroom risotto left our guests raving for days. Truly five-star execution.”</p>
+        <div class="review-author">
+          <div class="review-avatar">SL</div>
+          <div>
+            <p class="review-author-name">Seraphina Laurent</p>
+            <p class="review-author-meta">Verified Host &bull; Private Mezzanine Dinner</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Review 6: Acre -->
+      <article class="review-card reveal reveal--delay-2" data-review-cat="salon">
+        <div class="review-card-top">
+          <div class="reviews-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <span class="review-badge">Acre Atelier</span>
+        </div>
+        <p class="review-text">“From frictionless online reservation to the final hot-towel finish, Acre redefines what luxury grooming should feel like. Effortless, immaculate, and consistently exceptional.”</p>
+        <div class="review-author">
+          <div class="review-avatar">JH</div>
+          <div>
+            <p class="review-author-name">James Harrington</p>
+            <p class="review-author-meta">Verified Client &bull; Classic Cut & Beard Sculpture</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── Feedback ───────────────────────────────────────────── -->
+<section id="feedback" aria-labelledby="feedback-heading">
+  <div class="feedback-layout">
+    <div class="reveal">
+      <p class="t-label" style="margin-bottom:var(--space-4);">Share Your Experience</p>
+      <h2 id="feedback-heading" class="t-headline">We value your perspective.</h2>
+      <div class="divider" style="margin-top:var(--space-5);margin-bottom:var(--space-5);"></div>
+      <p class="t-body">Your feedback helps businesses understand what's working and where to improve. Responses are used to inform service decisions — never shared or published.</p>
+      <p class="t-body" style="margin-top:var(--space-4);">All submissions are reviewed directly by leadership to maintain exceptional standards.</p>
+    </div>
+    <div>
+      <form class="feedback-form" id="feedback-form" novalidate aria-label="Feedback form">
+        <div class="form-group">
+          <label class="form-label">How easy was your experience? <span aria-label="required">*</span></label>
+          <div class="rating-group" role="radiogroup" aria-label="Experience rating 1 to 5">
+            <button type="button" class="rating-btn" data-rating="1" aria-label="Rate 1 out of 5">1</button>
+            <button type="button" class="rating-btn" data-rating="2" aria-label="Rate 2 out of 5">2</button>
+            <button type="button" class="rating-btn" data-rating="3" aria-label="Rate 3 out of 5">3</button>
+            <button type="button" class="rating-btn" data-rating="4" aria-label="Rate 4 out of 5">4</button>
+            <button type="button" class="rating-btn" data-rating="5" aria-label="Rate 5 out of 5">5</button>
+          </div>
+          <span class="form-error" id="rating-err" role="alert" style="display:none;">Please select a rating.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fb-purpose">What were you trying to accomplish?</label>
+          <select class="form-select" id="fb-purpose">
+            <option value="">Select an option…</option>
+            <option value="booking">Making a booking</option>
+            <option value="browsing">Browsing the menu or gallery</option>
+            <option value="info">Finding opening hours or contact info</option>
+            <option value="ordering">Placing an order</option>
+            <option value="exploring">Exploring services & portfolio</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+        <div class="form-group" id="fb-other-group" style="display:none;">
+          <label class="form-label" for="fb-other-text">What were you trying to do?</label>
+          <input class="form-input" id="fb-other-text" type="text" placeholder="Describe your goal…" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fb-improve">What could be improved?</label>
+          <textarea class="form-textarea" id="fb-improve" placeholder="Share any thoughts on what could be better…"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fb-name">Your name (optional)</label>
+          <input class="form-input" id="fb-name" type="text" placeholder="First name or anonymous" autocomplete="given-name" />
+        </div>
+        <p class="consent-text">By submitting, you agree that your feedback may be reviewed by the business owner. No personal data will be published. <a href="#" style="color:var(--c-gold);text-decoration:underline;text-underline-offset:3px;">Privacy notice</a>.</p>
+        <button type="submit" class="btn btn--primary" style="align-self:flex-start;">Submit Feedback</button>
+      </form>
+      <div class="feedback-success" id="feedback-success" aria-live="polite">
+        <div style="width:56px;height:56px;border-radius:50%;border:1px solid var(--c-gold);display:flex;align-items:center;justify-content:center;color:var(--c-gold);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 class="t-title">Thank you</h3>
+        <p class="t-body" style="max-width:360px;text-align:center;">Your feedback has been received. It helps shape better experiences for every customer.</p>
+        <button class="btn btn--ghost" id="feedback-reset">Submit Another Response</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── About ──────────────────────────────────────────────── -->
+<section id="about" aria-labelledby="about-heading" style="padding:var(--space-11) 0;background:var(--bg-primary);">
+  <div style="max-width:var(--max-w-wide);margin:0 auto;padding:0 var(--space-7);display:grid;grid-template-columns:1fr 1fr;gap:var(--space-10);align-items:center;">
+    <div class="reveal">
+      <p class="t-label" style="margin-bottom:var(--space-5);">About VANTA</p>
+      <h2 id="about-heading" class="t-headline">Built for the businesses that take presentation seriously.</h2>
+    </div>
+    <div class="reveal reveal--delay-2" style="display:flex;flex-direction:column;gap:var(--space-5);">
+      <p class="t-body">VANTA is an exclusive digital commerce and bespoke experience platform designed for discerning modern enterprises. Far beyond generic templates, it delivers high-performance digital hospitality and commerce.</p>
+      <p class="t-body">Each business experience within this platform is independently designed to feel authentic: the photography studio feels like a photographer's real website, the restaurant feels like a real restaurant, and the booking flow feels trustworthy.</p>
+      <p class="t-body">Crafted with deliberate restraint, kinetic elegance, and engineered to turn visitors into lifelong patrons.</p>
+      <div class="divider"></div>
+      <a href="#booking" class="btn btn--ghost" style="align-self:flex-start;">Start a Conversation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Closing CTA ────────────────────────────────────────── -->
+<section id="closing-cta" aria-labelledby="cta-heading">
+  <div class="closing-cta-bg" aria-hidden="true"></div>
+  <div class="container closing-cta-inner">
+    <p class="t-label reveal">Ready?</p>
+    <h2 id="cta-heading" class="closing-cta-headline reveal reveal--delay-1">Make every customer interaction count.</h2>
+    <p class="t-subtitle reveal reveal--delay-2" style="max-width:480px;text-align:center;">Elevate your digital presence. Get in touch with our studio to discuss bespoke integrations and tailored experiences.</p>
+    <div class="closing-cta-actions reveal reveal--delay-3">
+      <a href="#booking" class="btn btn--primary">Book a Consultation</a>
+      <a href="#feedback" class="btn btn--ghost">Leave Feedback</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────── -->
+<footer id="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand-col">
+      <a href="#" class="brand" aria-label="VANTA home" style="width:fit-content;">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="30" height="30" stroke="#c9a96e" stroke-width="1"/>
+            <path d="M8 8 L16 24 L24 8" stroke="#c9a96e" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="brand-name">Vanta</span>
+      </a>
+      <p class="t-body" style="font-size:0.875rem;max-width:260px;">Unified commerce and digital experiences for contemporary enterprises.</p>
+      <p class="t-caption" style="color:var(--c-ash);">London &bull; New York &bull; Tokyo &bull; Paris</p>
+    </div>
+    <div>
+      <p class="footer-col-title">Platform</p>
+      <nav class="footer-links" aria-label="Platform links">
+        <a href="#experiences" class="footer-link">Experiences</a>
+        <a href="#gallery" class="footer-link">Gallery</a>
+        <a href="#restaurant" class="footer-link">Menu</a>
+        <a href="#booking" class="footer-link">Bookings</a>
+        <a href="#services" class="footer-link">Services</a>
+        <a href="#reviews" class="footer-link">Reviews</a>
+      </nav>
+    </div>
+    <div>
+      <p class="footer-col-title">Business</p>
+      <nav class="footer-links" aria-label="Business links">
+        <a href="#about" class="footer-link">About</a>
+        <a href="#feedback" class="footer-link">Feedback</a>
+        <a href="#" class="footer-link" id="footer-account-link">My Account</a>
+        <a href="admin.html" class="footer-link" id="footer-admin-link">Admin Area</a>
+      </nav>
+    </div>
+    <div>
+      <p class="footer-col-title">Contact</p>
+      <div class="footer-links">
+        <a href="mailto:concierge@vanta-studio.com" class="footer-link">concierge@vanta-studio.com</a>
+        <span class="footer-link" style="cursor:default;">+44 (0) 20 7946 0912</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      <a href="#" class="footer-legal-link">Privacy Policy</a>
+      <a href="#" class="footer-legal-link">Terms of Use</a>
+      <a href="#" class="footer-legal-link">Cookie Settings</a>
+    </div>
+    <p class="footer-copyright">&copy; 2026 VANTA Experience Platform. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ── Account Modal ──────────────────────────────────────── -->
+<div id="account-modal" class="checkout-overlay" role="dialog" aria-modal="true" aria-label="Account" aria-hidden="true">
+  <div class="checkout-modal" style="max-width:480px;">
+    <div class="checkout-modal-header">
+      <h2 class="t-title" id="account-modal-title">Sign In</h2>
+      <button class="header-icon-btn" id="account-modal-close" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <!-- Auth views injected by JS -->
+    <div id="account-modal-body" style="padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-5);">
+    </div>
+  </div>
+</div>
+
+<!-- ── Floating Style Studio FAB ──────────────────────────── -->
+<button id="theme-fab" class="theme-fab" aria-label="Personalize Aesthetics & Style Studio">
+  <span class="theme-fab-sparkle">✦</span>
+  <span class="theme-fab-text">Personalize Theme</span>
+</button>
+
+<!-- ── Style Studio Drawer ────────────────────────────────── -->
+<div class="theme-drawer-overlay" id="theme-drawer-overlay" aria-hidden="true"></div>
+<aside class="theme-drawer" id="theme-drawer" aria-label="Style and Visual Identity Studio" aria-hidden="true">
+  <div class="theme-drawer-header">
+    <div>
+      <p class="t-label" style="color:var(--c-gold);letter-spacing:0.14em;margin-bottom:4px;">Experience Personalization</p>
+      <h2 style="font-family:var(--font-serif);font-weight:300;font-size:1.5rem;color:var(--c-ivory);">Style & Identity Studio</h2>
+      <p class="t-caption" style="color:var(--text-muted);margin-top:4px;">Customize color aesthetics, typography, and section atmospheres in real time.</p>
+    </div>
+    <button class="header-icon-btn" id="theme-drawer-close" aria-label="Close Style Studio">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="theme-drawer-body">
+    <!-- Multi-Vertical Spectrum Toggle -->
+    <div>
+      <div class="theme-section-title">
+        <span>Section Visual Identities</span>
+        <span style="color:var(--text-muted);font-size:0.6rem;">Multi-Vertical</span>
+      </div>
+      <div class="theme-toggle-box">
+        <div>
+          <p style="font-size:0.875rem;font-weight:500;color:var(--c-ivory);margin-bottom:2px;">Unique Section Atmospheres</p>
+          <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.4;">
+            Each section adopts its own custom visual world: Darkroom (Gallery), Bordeaux Noir (Menu), Mayfair Green (Booking & Services), Champagne Luster (Reviews), Blueprint (Journey).
+          </p>
+        </div>
+        <label class="theme-switch" aria-label="Toggle distinct section visual identities">
+          <input type="checkbox" id="multi-vertical-toggle" checked />
+          <span class="theme-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Global Theme Presets -->
+    <div>
+      <div class="theme-section-title">
+        <span>Curated Color Palettes</span>
+        <span style="color:var(--text-muted);font-size:0.6rem;">5 Themes</span>
+      </div>
+      <div class="theme-options-grid">
+        <!-- Noir -->
+        <button class="theme-card-option active" data-set-theme="noir" aria-label="Imperial Noir theme">
+          <div class="theme-preview-swatch">
+            <div class="theme-swatch-half" style="background:#080808;"></div>
+            <div class="theme-swatch-half" style="background:#c9a96e;"></div>
+          </div>
+          <div class="theme-card-name">Imperial Noir</div>
+          <div class="theme-card-tag">Obsidian & Gold</div>
+        </button>
+
+        <!-- Bordeaux -->
+        <button class="theme-card-option" data-set-theme="bordeaux" aria-label="Bordeaux Speakeasy theme">
+          <div class="theme-preview-swatch">
+            <div class="theme-swatch-half" style="background:#13070c;"></div>
+            <div class="theme-swatch-half" style="background:#d4915c;"></div>
+          </div>
+          <div class="theme-card-name">Bordeaux Speakeasy</div>
+          <div class="theme-card-tag">Velvet Wine & Amber</div>
+        </button>
+
+        <!-- Atelier -->
+        <button class="theme-card-option" data-set-theme="atelier" aria-label="Mayfair Atelier theme">
+          <div class="theme-preview-swatch">
+            <div class="theme-swatch-half" style="background:#08140f;"></div>
+            <div class="theme-swatch-half" style="background:#4ade80;"></div>
+          </div>
+          <div class="theme-card-name">Mayfair Atelier</div>
+          <div class="theme-card-tag">Racing Green & Brass</div>
+        </button>
+
+        <!-- Sapphire -->
+        <button class="theme-card-option" data-set-theme="sapphire" aria-label="Midnight Sapphire theme">
+          <div class="theme-preview-swatch">
+            <div class="theme-swatch-half" style="background:#060a12;"></div>
+            <div class="theme-swatch-half" style="background:#38bdf8;"></div>
+          </div>
+          <div class="theme-card-name">Midnight Sapphire</div>
+          <div class="theme-card-tag">Deep Navy & Cyan</div>
+        </button>
+
+        <!-- Alabaster (Light Mode) -->
+        <button class="theme-card-option" data-set-theme="alabaster" aria-label="Alabaster Canvas light mode theme" style="grid-column: span 2;">
+          <div class="theme-preview-swatch">
+            <div class="theme-swatch-half" style="background:#f6f4ee;"></div>
+            <div class="theme-swatch-half" style="background:#14120f;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="theme-card-name">Alabaster Canvas (Light Mode)</div>
+            <span style="font-size:0.625rem;padding:2px 6px;border-radius:3px;background:rgba(201,169,110,0.15);color:var(--c-gold);font-family:var(--font-mono);">LIGHT MODE</span>
+          </div>
+          <div class="theme-card-tag">Editorial Linen & Crisp Obsidian Charcoal</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Editorial Typography Families -->
+    <div>
+      <div class="theme-section-title">
+        <span>Display Typography</span>
+        <span style="color:var(--text-muted);font-size:0.6rem;">Editorial Typefaces</span>
+      </div>
+      <div class="font-options-row">
+        <button class="font-option-btn active" data-set-font="cormorant">
+          <span style="font-family:'Cormorant Garamond', serif;font-size:1.15rem;">Cormorant Garamond</span>
+          <span style="font-family:var(--font-mono);font-size:0.625rem;color:var(--text-muted);">Classical Serif</span>
+        </button>
+        <button class="font-option-btn" data-set-font="playfair">
+          <span style="font-family:'Playfair Display', serif;font-size:1.05rem;font-weight:600;">Playfair Display</span>
+          <span style="font-family:var(--font-mono);font-size:0.625rem;color:var(--text-muted);">High-Fashion Editorial</span>
+        </button>
+        <button class="font-option-btn" data-set-font="cinzel">
+          <span style="font-family:'Cinzel', serif;font-size:0.95rem;letter-spacing:0.06em;">CINZEL IMPERIAL</span>
+          <span style="font-family:var(--font-mono);font-size:0.625rem;color:var(--text-muted);">Sculpted Roman</span>
+        </button>
+        <button class="font-option-btn" data-set-font="grotesk">
+          <span style="font-family:'Space Grotesk', sans-serif;font-size:1rem;font-weight:600;">Space Grotesk</span>
+          <span style="font-family:var(--font-mono);font-size:0.625rem;color:var(--text-muted);">Modernist Brutalist</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div style="display:flex;gap:var(--space-3);padding-top:var(--space-2);border-top:1px solid var(--border);">
+      <button class="btn btn--ghost" id="theme-randomize-btn" style="flex:1;justify-content:center;font-size:0.75rem;">
+        ✦ Surprise Vibe
+      </button>
+      <button class="btn btn--text" id="theme-reset-btn" style="font-size:0.75rem;color:var(--text-muted);">
+        Reset Default
+      </button>
+    </div>
+  </div>
+</aside>
+
+<!-- ── Scripts ────────────────────────────────────────────── -->
+<script src="assets/js/data.js"></script>
+<script src="assets/js/gallery.js"></script>
+<script src="assets/js/restaurant.js"></script>
+<script src="assets/js/booking.js"></script>
+<script src="assets/js/feedback.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
